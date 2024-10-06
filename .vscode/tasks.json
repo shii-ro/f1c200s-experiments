@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Sunxi Commands",
+            "type": "shell",
+            "command": ".\\tools\\sunxi\\sunxi-fel",
+            "args": [
+                "-p",
+                "spl",
+                "${workspaceFolder}\\$(BOOT).elf"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Write to Memory",
+            "type": "shell",
+            "command": ".\\tools\\sunxi\\sunxi-fel",
+            "args": [
+                "-p",
+                "write",
+                "0x80000000",
+                "${workspaceFolder}\\$(NAME).elf"
+            ],
+            "dependsOn": "Run Sunxi Commands",
+            "problemMatcher": []
+        },
+        {
+            "label": "Execute in Memory",
+            "type": "shell",
+            "command": ".\\tools\\sunxi\\sunxi-fel",
+            "args": [
+                "exec",
+                "0x80000000"
+            ],
+            "dependsOn": "Write to Memory",
+            "problemMatcher": []
+        }
+    ]
+}

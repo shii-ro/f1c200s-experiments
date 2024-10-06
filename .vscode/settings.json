@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "f1c200s.h": "c",
+        "uart.h": "c",
+        "stdint.h": "c",
+        "gpio.h": "c"
+    }
+}

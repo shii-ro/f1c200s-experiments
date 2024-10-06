@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Sunxi Commands",
+            "type": "shell",
+            "request": "launch",
+            "command": "echo 'Starting Sunxi Commands...'",
+            "args": [],
+            "postDebugTask": "Execute in Memory",
+            "problemMatcher": [],
+            "runInTerminal": true
+        }
+    ]
+}
