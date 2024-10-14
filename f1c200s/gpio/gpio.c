@@ -44,3 +44,19 @@ void GPIO_TogglePin(GPIO_Port *port, GPIO_Pin pin)
 
     GPIO_WritePin(port, pin, pin_state);
 }
+
+void GPIO_EnableInterrupt(GPIO_PortInt *pint, GPIO_Pin pin, GPIO_INTRMode int_mode)
+{
+    // CFG0 = 0  ~ 7
+    // CFG1 = 8  ~ 15
+    // CFG2 = 16 ~ 21
+    // CFG3 = RESERVED
+    uint32_t mask = 0x7 << (pin % 8);
+    uint32_t offset = ((pin / 8) * 0x4);
+
+    volatile uint32_t *cfg_reg = (volatile uint32_t *)((uintptr_t)&pint->CFG0 + offset);
+    *cfg_reg = (*cfg_reg & ~mask) | (int_mode << (pin % 8));
+
+    // enable the interrupt for the desired pin
+    pint->CTRL |= (1 << pin);
+}

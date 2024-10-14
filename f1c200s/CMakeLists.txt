@@ -7,11 +7,15 @@ project(F1C200S C)
 add_library(f1c200s STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/uart/uart.c
     ${CMAKE_CURRENT_SOURCE_DIR}/gpio/gpio.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/dram/dram.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/ccu/ccu.c
 )
 
 # Add include directories
 target_include_directories(f1c200s PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/ccu
     ${CMAKE_CURRENT_SOURCE_DIR}/uart
+    ${CMAKE_CURRENT_SOURCE_DIR}/dram
     ${CMAKE_CURRENT_SOURCE_DIR}/gpio
 )

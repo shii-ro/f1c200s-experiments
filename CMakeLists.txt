@@ -7,7 +7,7 @@ set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/arm-gcc-toolchain.cmake)
 project(f1c200s-hello-world C)
 
 # Add the executable
-add_executable(${PROJECT_NAME} main.c)
+add_executable(${PROJECT_NAME} main.c utils/printf.c)
 
 # Ensure path to arm-none-eabi-size
 set(TOOLCHAIN_PATH "C:/ARM-GNU-Toolchain/bin")
@@ -27,6 +27,7 @@ add_custom_target(
 )
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/f1c200s)
+
 target_link_libraries(f1c200s-hello-world PRIVATE f1c200s)
 # Ensure the binary is built after the ELF executable
 add_dependencies(bin ${PROJECT_NAME})

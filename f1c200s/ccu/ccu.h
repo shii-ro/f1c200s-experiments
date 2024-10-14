@@ -1,3 +1,6 @@
+#ifndef CCU_H_
+#define CCU_H_
+
 #include <stdint.h>
 #include "f1c200s.h"
 
@@ -104,6 +107,166 @@ typedef struct
 #define CCU_BUS_SOFT_RST_1_DEBE    (1U << 12U)
 #define CCU_BUS_SOFT_RST_1_DEFE    (1U << 14U)
 
+// PLLDDR_PAT_CTRL_REG Register Bit Positions
+#define PLLDDR_PAT_CTRL_SIG_DELT_PAT_EN_POS   (31U)
+#define PLLDDR_PAT_CTRL_SPR_FREQ_MODE_POS     (29U)
+#define PLLDDR_PAT_CTRL_WAVE_STEP_POS         (20U)
+#define PLLDDR_PAT_CTRL_FREQ_POS              (17U)
+#define PLLDDR_PAT_CTRL_WAVE_BOT_POS          (0U)
+
+// PLLDDR_PAT_CTRL_REG Masks
+#define PLLDDR_PAT_CTRL_SPR_FREQ_MODE_MASK    (0x3U << PLLDDR_PAT_CTRL_SPR_FREQ_MODE_POS)   // Mask for Spread Frequency Mode
+#define PLLDDR_PAT_CTRL_WAVE_STEP_MASK        (0x1FFU << PLLDDR_PAT_CTRL_WAVE_STEP_POS)     // Mask for Wave Step
+#define PLLDDR_PAT_CTRL_FREQ_MASK             (0x3U << PLLDDR_PAT_CTRL_FREQ_POS)            // Mask for Frequency
+#define PLLDDR_PAT_CTRL_WAVE_BOT_MASK         (0x1FFFFU << PLLDDR_PAT_CTRL_WAVE_BOT_POS)    // Mask for Wave Bottom
+
+#define PLLDDR_DAT_CTRL_WAVE_BOT(value)       (value << PLLDDR_PAT_CTRL_WAVE_BOT_POS)  
+#define PLLDDR_PAT_CTRL_WAVE_STEP(value)      (value << PLLDDR_PAT_CTRL_WAVE_STEP_POS)  
+#define PLLDDR_PAT_CTRL_SIG_DELT_PAT_EN  (1U << PLLDDR_PAT_CTRL_SIG_DELT_PAT_EN_POS) 
+
+// Option values for Spread Frequency Mode (00: DC=0, 01: DC=1, 1X: Triangular)
+#define PLLDDR_PAT_CTRL_SPR_FREQ_DC_0         (0x0U << PLLDDR_PAT_CTRL_SPR_FREQ_MODE_POS)
+#define PLLDDR_PAT_CTRL_SPR_FREQ_DC_1         (0x1U << PLLDDR_PAT_CTRL_SPR_FREQ_MODE_POS)
+#define PLLDDR_PAT_CTRL_SPR_FREQ_TRIANGULAR   (0x2U << PLLDDR_PAT_CTRL_SPR_FREQ_MODE_POS)
+
+// Option values for Frequency (00: 31.5KHz, 01: 32KHz, 10: 32.5KHz, 11: 33KHz)
+#define PLLDDR_PAT_CTRL_FREQ_31_5KHZ          (0x0U << PLLDDR_PAT_CTRL_FREQ_POS)
+#define PLLDDR_PAT_CTRL_FREQ_32KHZ            (0x1U << PLLDDR_PAT_CTRL_FREQ_POS)
+#define PLLDDR_PAT_CTRL_FREQ_32_5KHZ          (0x2U << PLLDDR_PAT_CTRL_FREQ_POS)
+#define PLLDDR_PAT_CTRL_FREQ_33KHZ            (0x3U << PLLDDR_PAT_CTRL_FREQ_POS)
+
+// PLL_DDR_CTRL_REG Register Bit Positions
+#define PLL_DDR_CTRL_PLL_ENABLE_POS           (31U)
+#define PLL_DDR_CTRL_LOCK_POS                 (28U)
+#define PLL_DDR_CTRL_SIGMA_DELTA_EN_POS       (24U)
+#define PLL_DDR_CTRL_CFG_UPDATE_POS           (20U)
+#define PLL_DDR_CTRL_FACTOR_N_POS             (8U)
+#define PLL_DDR_CTRL_FACTOR_K_POS             (4U)
+#define PLL_DDR_CTRL_FACTOR_M_POS             (0U)
+
+// PLL_DDR_CTRL_REG Masks
+#define PLL_DDR_CTRL_PLL_ENABLE_MASK          (1U << PLL_DDR_CTRL_PLL_ENABLE_POS)      // Mask for PLL Enable
+#define PLL_DDR_CTRL_LOCK_MASK                (1U << PLL_DDR_CTRL_LOCK_POS)            // Mask for PLL Lock status
+#define PLL_DDR_CTRL_SIGMA_DELTA_EN_MASK      (1U << PLL_DDR_CTRL_SIGMA_DELTA_EN_POS)  // Mask for Sigma-Delta Enable
+#define PLL_DDR_CTRL_CFG_UPDATE_MASK          (1U << PLL_DDR_CTRL_CFG_UPDATE_POS)      // Mask for PLL DDR Configuration Update
+#define PLL_DDR_CTRL_FACTOR_N_MASK            (0x1FU << PLL_DDR_CTRL_FACTOR_N_POS)     // Mask for PLL Factor N (5 bits)
+#define PLL_DDR_CTRL_FACTOR_K_MASK            (0x3U << PLL_DDR_CTRL_FACTOR_K_POS)      // Mask for PLL Factor K (2 bits)
+#define PLL_DDR_CTRL_FACTOR_M_MASK            (0x3U << PLL_DDR_CTRL_FACTOR_M_POS)      // Mask for PLL Factor M (2 bits)
+
+// Option values for PLL Enable (0: Disable, 1: Enable)
+#define PLL_DDR_CTRL_PLL_DISABLE              (0x0U << PLL_DDR_CTRL_PLL_ENABLE_POS)
+#define PLL_DDR_CTRL_PLL_ENABLE               (0x1U << PLL_DDR_CTRL_PLL_ENABLE_POS)
+
+// Option values for Lock Status (Read-Only: 0: Unlocked, 1: Locked)
+#define PLL_DDR_CTRL_LOCK_UNLOCKED            (0x0U << PLL_DDR_CTRL_LOCK_POS)
+#define PLL_DDR_CTRL_LOCK_LOCKED              (0x1U << PLL_DDR_CTRL_LOCK_POS)
+
+// Option values for Sigma-Delta Enable (0: Disable, 1: Enable)
+#define PLL_DDR_CTRL_SIGMA_DELTA_DISABLE      (0x0U << PLL_DDR_CTRL_SIGMA_DELTA_EN_POS)
+#define PLL_DDR_CTRL_SIGMA_DELTA_ENABLE       (0x1U << PLL_DDR_CTRL_SIGMA_DELTA_EN_POS)
+
+// Option values for PLL DDR Configuration Update (0: No effect, 1: Validate PLL)
+#define PLL_DDR_CTRL_CFG_NO_EFFECT            (0x0U << PLL_DDR_CTRL_CFG_UPDATE_POS)
+#define PLL_DDR_CTRL_CFG_UPDATE               (0x1U << PLL_DDR_CTRL_CFG_UPDATE_POS)
+
+// Option values for PLL Factor N (12:8, Factor N = value + 1)
+#define PLL_DDR_CTRL_FACTOR_N_VAL(n)          (((n) & 0x1FU) << PLL_DDR_CTRL_FACTOR_N_POS)  // N value ranges from 1 to 32
+
+// Option values for PLL Factor K (5:4, Factor K = value + 1, range from 1 to 4)
+#define PLL_DDR_CTRL_FACTOR_K_VAL(k)          (((k - 1U) & 0x3U) << PLL_DDR_CTRL_FACTOR_K_POS)  // K value ranges from 1 to 4
+
+// Option values for PLL Factor M (1:0, Factor M = value + 1, range from 1 to 4)
+#define PLL_DDR_CTRL_FACTOR_M_VAL(m)          (((m - 1U) & 0x3U) << PLL_DDR_CTR)
+
+// BUS_CLK_GATING_REG0 Register Bit Positions
+#define BUS_CLK_GATING_USB_OTG_POS        (24U)
+#define BUS_CLK_GATING_SPI1_POS           (21U)
+#define BUS_CLK_GATING_SPI0_POS           (20U)
+#define BUS_CLK_GATING_SDRAM_POS          (14U)
+#define BUS_CLK_GATING_SD1_POS            (9U)
+#define BUS_CLK_GATING_SD0_POS            (8U)
+#define BUS_CLK_GATING_DMA_POS            (6U)
+
+// BUS_CLK_GATING_REG0 Masks
+#define BUS_CLK_GATING_USB_OTG_MASK       (1U << BUS_CLK_GATING_USB_OTG_POS)   // Mask for USB-OTG Gating Clock
+#define BUS_CLK_GATING_SPI1_MASK          (1U << BUS_CLK_GATING_SPI1_POS)      // Mask for SPI1 Gating Clock
+#define BUS_CLK_GATING_SPI0_MASK          (1U << BUS_CLK_GATING_SPI0_POS)      // Mask for SPI0 Gating Clock
+#define BUS_CLK_GATING_SDRAM_MASK         (1U << BUS_CLK_GATING_SDRAM_POS)     // Mask for SDRAM Gating Clock
+#define BUS_CLK_GATING_SD1_MASK           (1U << BUS_CLK_GATING_SD1_POS)       // Mask for SD1 Gating Clock
+#define BUS_CLK_GATING_SD0_MASK           (1U << BUS_CLK_GATING_SD0_POS)       // Mask for SD0 Gating Clock
+#define BUS_CLK_GATING_DMA_MASK           (1U << BUS_CLK_GATING_DMA_POS)       // Mask for DMA Gating Clock
+
+// Option values for Gating Clocks (0: Mask, 1: Pass)
+#define BUS_CLK_GATING_MASK               (0x0U)  // Mask the clock
+#define BUS_CLK_GATING_PASS               (0x1U)  // Pass the clock
+
+// Option values for specific clocks
+#define BUS_CLK_GATING_USB_OTG_MASK_VAL   (BUS_CLK_GATING_MASK << BUS_CLK_GATING_USB_OTG_POS)   // Mask USB-OTG Clock
+#define BUS_CLK_GATING_USB_OTG_PASS_VAL   (BUS_CLK_GATING_PASS << BUS_CLK_GATING_USB_OTG_POS)   // Pass USB-OTG Clock
+
+#define BUS_CLK_GATING_SPI1_MASK_VAL      (BUS_CLK_GATING_MASK << BUS_CLK_GATING_SPI1_POS)      // Mask SPI1 Clock
+#define BUS_CLK_GATING_SPI1_PASS_VAL      (BUS_CLK_GATING_PASS << BUS_CLK_GATING_SPI1_POS)      // Pass SPI1 Clock
+
+#define BUS_CLK_GATING_SPI0_MASK_VAL      (BUS_CLK_GATING_MASK << BUS_CLK_GATING_SPI0_POS)      // Mask SPI0 Clock
+#define BUS_CLK_GATING_SPI0_PASS_VAL      (BUS_CLK_GATING_PASS << BUS_CLK_GATING_SPI0_POS)      // Pass SPI0 Clock
+
+#define BUS_CLK_GATING_SDRAM_MASK_VAL     (BUS_CLK_GATING_MASK << BUS_CLK_GATING_SDRAM_POS)     // Mask SDRAM Clock
+#define BUS_CLK_GATING_SDRAM_PASS_VAL     (BUS_CLK_GATING_PASS << BUS_CLK_GATING_SDRAM_POS)     // Pass SDRAM Clock
+
+#define BUS_CLK_GATING_SD1_MASK_VAL       (BUS_CLK_GATING_MASK << BUS_CLK_GATING_SD1_POS)       // Mask SD1 Clock
+#define BUS_CLK_GATING_SD1_PASS_VAL       (BUS_CLK_GATING_PASS << BUS_CLK_GATING_SD1_POS)       // Pass SD1 Clock
+
+#define BUS_CLK_GATING_SD0_MASK_VAL       (BUS_CLK_GATING_MASK << BUS_CLK_GATING_SD0_POS)       // Mask SD0 Clock
+#define BUS_CLK_GATING_SD0_PASS_VAL       (BUS_CLK_GATING_PASS << BUS_CLK_GATING_SD0_POS)       // Pass SD0 Clock
+
+#define BUS_CLK_GATING_DMA_MASK_VAL       (BUS_CLK_GATING_MASK << BUS_CLK_GATING_DMA_POS)       // Mask DMA Clock
+#define BUS_CLK_GATING_DMA_PASS_VAL       (BUS_CLK_GATING_PASS << BUS_CLK_GATING_DMA_POS)       // Pass DMA Clock
+
+// BUS_SOFT_RST_REG0 Register Bit Positions
+#define BUS_SOFT_RST_USBOTG_POS        (24U)
+#define BUS_SOFT_RST_SPI1_POS          (21U)
+#define BUS_SOFT_RST_SPI0_POS          (20U)
+#define BUS_SOFT_RST_SDRAM_POS         (14U)
+#define BUS_SOFT_RST_SD1_POS           (9U)
+#define BUS_SOFT_RST_SD0_POS           (8U)
+#define BUS_SOFT_RST_DMA_POS           (6U)
+
+// BUS_SOFT_RST_REG0 Masks
+#define BUS_SOFT_RST_USBOTG_MASK       (1U << BUS_SOFT_RST_USBOTG_POS)  // Mask for USB-OTG Reset
+#define BUS_SOFT_RST_SPI1_MASK         (1U << BUS_SOFT_RST_SPI1_POS)     // Mask for SPI1 Reset
+#define BUS_SOFT_RST_SPI0_MASK         (1U << BUS_SOFT_RST_SPI0_POS)     // Mask for SPI0 Reset
+#define BUS_SOFT_RST_SDRAM_MASK        (1U << BUS_SOFT_RST_SDRAM_POS)    // Mask for SDRAM Reset
+#define BUS_SOFT_RST_SD1_MASK          (1U << BUS_SOFT_RST_SD1_POS)      // Mask for SD/MMC 1 Reset
+#define BUS_SOFT_RST_SD0_MASK          (1U << BUS_SOFT_RST_SD0_POS)      // Mask for SD/MMC 0 Reset
+#define BUS_SOFT_RST_DMA_MASK          (1U << BUS_SOFT_RST_DMA_POS)      // Mask for DMA Reset
+
+// Option values for Reset (0: Assert, 1: De-assert)
+#define BUS_SOFT_RST_ASSERT            (0x0U)  // Assert Reset
+#define BUS_SOFT_RST_DEASSERT          (0x1U)  // De-assert Reset
+
+// Option values for specific resets
+#define BUS_SOFT_RST_USBOTG_ASSERT_VAL (BUS_SOFT_RST_ASSERT << BUS_SOFT_RST_USBOTG_POS)  // Assert USB-OTG Reset
+#define BUS_SOFT_RST_USBOTG_DEASSERT_VAL (BUS_SOFT_RST_DEASSERT << BUS_SOFT_RST_USBOTG_POS)  // De-assert USB-OTG Reset
+
+#define BUS_SOFT_RST_SPI1_ASSERT_VAL   (BUS_SOFT_RST_ASSERT << BUS_SOFT_RST_SPI1_POS)    // Assert SPI1 Reset
+#define BUS_SOFT_RST_SPI1_DEASSERT_VAL (BUS_SOFT_RST_DEASSERT << BUS_SOFT_RST_SPI1_POS)  // De-assert SPI1 Reset
+
+#define BUS_SOFT_RST_SPI0_ASSERT_VAL   (BUS_SOFT_RST_ASSERT << BUS_SOFT_RST_SPI0_POS)    // Assert SPI0 Reset
+#define BUS_SOFT_RST_SPI0_DEASSERT_VAL (BUS_SOFT_RST_DEASSERT << BUS_SOFT_RST_SPI0_POS)  // De-assert SPI0 Reset
+
+#define BUS_SOFT_RST_SDRAM_ASSERT_VAL  (BUS_SOFT_RST_ASSERT << BUS_SOFT_RST_SDRAM_POS)   // Assert SDRAM Reset
+#define BUS_SOFT_RST_SDRAM_DEASSERT_VAL (BUS_SOFT_RST_DEASSERT << BUS_SOFT_RST_SDRAM_POS) // De-assert SDRAM Reset
+
+#define BUS_SOFT_RST_SD1_ASSERT_VAL    (BUS_SOFT_RST_ASSERT << BUS_SOFT_RST_SD1_POS)     // Assert SD/MMC 1 Reset
+#define BUS_SOFT_RST_SD1_DEASSERT_VAL  (BUS_SOFT_RST_DEASSERT << BUS_SOFT_RST_SD1_POS)   // De-assert SD/MMC 1 Reset
+
+#define BUS_SOFT_RST_SD0_ASSERT_VAL    (BUS_SOFT_RST_ASSERT << BUS_SOFT_RST_SD0_POS)     // Assert SD/MMC 0 Reset
+#define BUS_SOFT_RST_SD0_DEASSERT_VAL  (BUS_SOFT_RST_DEASSERT << BUS_SOFT_RST_SD0_POS)   // De-assert SD/MMC 0 Reset
+
+#define BUS_SOFT_RST_DMA_ASSERT_VAL    (BUS_SOFT_RST_ASSERT << BUS_SOFT_RST_DMA_POS)     // Assert DMA Reset
+#define BUS_SOFT_RST_DMA_DEASSERT_VAL  (BUS_SOFT_RST_DEASSERT << BUS_SOFT_RST_DMA_POS)   // De-assert DMA Reset   
+
+
 // Function Prototypes
 void CCU_EnableBusClockGating_0(uint32_t peripheral);
 void CCU_EnableBusClockGating_1(uint32_t peripheral);
@@ -115,3 +278,5 @@ void CCU_AssertBusSoftReset(uint32_t peripheral);
 void CCU_DeassertBusSoftReset(uint32_t peripheral);
 
 uint32_t CCU_GetCPUFrequency(void);
+
+#endif

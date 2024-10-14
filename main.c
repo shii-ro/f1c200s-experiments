@@ -27,6 +27,8 @@
 #include "f1c200s/uart/uart.h"
 #include "f1c200s/gpio/gpio.h"
 #include "f1c200s/ccu/ccu.h"
+#include "f1c200s/dram/dram.h"
+#include "utils/printf.h"
 
 // // F1C200s register definitions
 #define PA_CFG0 (*(volatile uint32_t *)0x01c20800)
@@ -53,10 +55,13 @@ void _start(void)
 
 void main()
 {
+
     UART_Init(UART1);
     UART_SetBaudRate(UART1, 115200);
     UART_SetLineControl(UART1, LENGTH_8_BITS, STOP_1_BIT, PARITY_NONE);
     UART_SetFIFO(UART1, FIFO_DISABLED);
+
+    DRAM_Init();
 
     GPIO_SetMode(&GPIO->PORTA, GPIO_PIN_0, PA0_MODE_OUTPUT);
 

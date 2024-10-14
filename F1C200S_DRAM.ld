@@ -5,9 +5,11 @@ MEMORY
 
 SECTIONS
 {
+    /*
     .text.startup : {
         *(.text.startup)
     } > ram
+    */
 
     .text : {
         *(.text*)
